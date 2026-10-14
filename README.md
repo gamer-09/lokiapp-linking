@@ -21,7 +21,7 @@ A unified dashboard for managing multiple social media platforms from a single i
 
 ### Prerequisites
 
-- Node.js 18+ installed
+- Node.js 20 or newer (this is a Next.js 16 app)
 - npm or yarn package manager
 
 ### Installation
@@ -37,12 +37,13 @@ cd loki_12
 npm install
 ```
 
-3. Set up environment variables:
-```bash
-cp .env.example .env.local
-```
+3. Create an `.env.local` file in the repo root (it's git-ignored) and fill in the
+   platform credentials you have — the names are listed under
+   [Environment variables](#environment-variables).
 
-4. Configure your API credentials in `.env.local` (see [API Credentials Setup](#api-credentials-setup) below)
+4. Configure your API credentials — either in `.env.local`, or at runtime in the app:
+   the **Connect Account → credentials** modal stores a Client ID/Secret per platform in
+   your browser, so you can try it without touching the environment at all.
 
 5. Run the development server:
 ```bash
@@ -99,6 +100,22 @@ To use Loki_12, you need to obtain API credentials from each platform you want t
 4. Add `http://localhost:3000/api/auth/callback/instagram` as redirect URL
 5. Copy App ID and App Secret to your `.env.local`
 
+## Environment variables
+
+All of these are optional — a platform stays unavailable until its credentials exist, and the
+app also accepts a `NEXT_PUBLIC_`-prefixed spelling of each one. Redirect URIs default to
+`http://localhost:3000/api/auth/callback/<platform>` when unset.
+
+| Platform | Variables |
+| --- | --- |
+| LinkedIn | `LINKEDIN_CLIENT_ID`, `LINKEDIN_CLIENT_SECRET`, `LINKEDIN_REDIRECT_URI` |
+| Gmail | `GMAIL_CLIENT_ID`, `GMAIL_CLIENT_SECRET`, `GMAIL_REDIRECT_URI` |
+| X / Twitter | `TWITTER_CLIENT_ID`, `TWITTER_CLIENT_SECRET`, `TWITTER_REDIRECT_URI` |
+| WhatsApp | `WHATSAPP_CLIENT_ID`, `WHATSAPP_CLIENT_SECRET`, `WHATSAPP_REDIRECT_URI` |
+| Telegram | `TELEGRAM_BOT_TOKEN` |
+| TikTok | `TIKTOK_CLIENT_ID`, `TIKTOK_CLIENT_SECRET`, `TIKTOK_REDIRECT_URI` |
+| Instagram | `INSTAGRAM_CLIENT_ID`, `INSTAGRAM_CLIENT_SECRET`, `INSTAGRAM_REDIRECT_URI` |
+
 ## Project Structure
 
 ```
@@ -123,7 +140,6 @@ loki_12/
 │   │   └── useStore.ts
 │   └── types/
 │       └── index.ts
-├── .env.example
 ├── package.json
 └── README.md
 ```
